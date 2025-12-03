@@ -89,10 +89,10 @@ class ConfigManager:
         db_config = self.get_database_config()
         url = db_config.get("url")
         if not url:
-            # 从环境变量构建
+            # 从环境变量构建（Docker 环境中 host 应该是 'postgres'）
             user = os.getenv("DB_USER", "xianxia_user")
             password = os.getenv("DB_PASSWORD", "xianxia_password")
-            host = os.getenv("DB_HOST", "localhost")
+            host = os.getenv("DB_HOST", "postgres")  # Docker 中使用服务名 'postgres'
             port = os.getenv("DB_PORT", "5432")
             dbname = os.getenv("DB_NAME", "xianxia_db")
             url = f"postgresql://{user}:{password}@{host}:{port}/{dbname}"

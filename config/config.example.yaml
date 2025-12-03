@@ -16,8 +16,9 @@ telegram:
 # 数据库配置
 database:
   # PostgreSQL 连接字符串
+  # 本地测试使用 localhost，Docker 环境使用 postgres
   # 格式: postgresql://用户名:密码@主机:端口/数据库名
-  url: "postgresql://xianxia_user:xianxia_password@localhost:5432/xianxia_db"
+  url: "postgresql://xianxia_user:xianxia_password@postgres:5432/xianxia_db"
   
   # 连接池设置
   pool_size: 10

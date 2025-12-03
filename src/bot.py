@@ -1,6 +1,7 @@
 import logging
 import os
 import sys
+import time
 from telegram import Update
 from telegram.ext import (
     Application,
@@ -29,15 +30,35 @@ logger = logging.getLogger(__name__)
 class XianxiaBot:
     """修仙游戏助手 Bot"""
 
-    def __init__(self):
+    def __init__(self, max_retries: int = 30, retry_delay: int = 2):
         setup_logging()
         
         self.bot_token = config.bot_token
         self.user_id = config.user_id
-        self.db = Database(config.db_url)
-        self.db.init_db()
+        
+        # 尝试连接数据库，如果失败则重试
+        self.db = self._init_database(max_retries, retry_delay)
         
         logger.info("Bot 初始化完成")
+
+    def _init_database(self, max_retries: int, retry_delay: int) -> Database:
+        """初始化数据库，带重试机制"""
+        db_url = config.db_url
+        
+        for attempt in range(max_retries):
+            try:
+                logger.info(f"尝试连接数据库... ({attempt + 1}/{max_retries})")
+                db = Database(db_url)
+                db.init_db()
+                logger.info("✅ 数据库初始化成功")
+                return db
+            except Exception as e:
+                if attempt < max_retries - 1:
+                    logger.warning(f"数据库连接失败，将在 {retry_delay} 秒后重试: {str(e)[:100]}")
+                    time.sleep(retry_delay)
+                else:
+                    logger.error(f"数据库连接失败，已达到最大重试次数: {e}")
+                    raise
 
     def run(self):
         """运行 Bot"""
