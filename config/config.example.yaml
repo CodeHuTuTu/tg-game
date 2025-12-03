@@ -1,0 +1,62 @@
+# 修仙游戏助手 - 配置文件示例
+
+# Telegram Bot 配置
+telegram:
+  # 机器人Token，从 BotFather 获取
+  bot_token: "YOUR_BOT_TOKEN_HERE"
+  
+  # 你的 Telegram User ID（获取方式：https://t.me/userinfobot）
+  user_id: 123456789
+  
+  # 游戏机器人的用户名或 User ID
+  game_bot_id: 987654321  # 美奈机器人的ID
+  # 或者使用用户名
+  game_bot_username: "mei_nai_bot"
+
+# 数据库配置
+database:
+  # PostgreSQL 连接字符串
+  # 格式: postgresql://用户名:密码@主机:端口/数据库名
+  url: "postgresql://xianxia_user:xianxia_password@localhost:5432/xianxia_db"
+  
+  # 连接池设置
+  pool_size: 10
+  max_overflow: 20
+  pool_recycle: 3600
+
+# 应用配置
+app:
+  # 日志级别: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  log_level: "INFO"
+  
+  # 日志文件路径
+  log_file: "./logs/bot.log"
+  
+  # 是否启用调试模式
+  debug: false
+
+# 定时任务配置
+scheduler:
+  # 自动同步数据的间隔（分钟）
+  # 设置为 0 禁用自动同步，需要手动触发
+  sync_interval: 60
+  
+  # 是否在启动时立即同步一次
+  sync_on_startup: true
+
+# 商店助手配置
+shop:
+  # 保留商店历史记录的天数
+  history_days: 30
+  
+  # 最多保存多少条商店快照
+  max_snapshots: 100
+
+# 功能开关
+features:
+  # 是否启用自动数据同步
+  auto_sync: true
+  
+  # 是否启用Web界面
+  enable_web: true
+  web_port: 8080
