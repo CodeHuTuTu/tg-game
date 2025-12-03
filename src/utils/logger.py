@@ -1,6 +1,14 @@
 import logging
 import logging.handlers
 from pathlib import Path
+import os
+import sys
+
+# 确保 src 模块可以被导入
+project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
 from src.utils.config import config
 
 

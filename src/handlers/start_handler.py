@@ -1,6 +1,14 @@
 import logging
+import os
+import sys
 from telegram import Update
 from telegram.ext import ContextTypes
+
+# 确保 src 模块可以被导入
+project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
 from src.utils.menu_helper import MenuHelper
 
 logger = logging.getLogger(__name__)
