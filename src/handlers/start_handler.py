@@ -10,6 +10,7 @@ if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
 from src.utils.menu_helper import MenuHelper
+from src.handlers.forward_handler import ForwardHandler
 
 logger = logging.getLogger(__name__)
 
@@ -91,7 +92,7 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def handle_command_button(update: Update, context: ContextTypes.DEFAULT_TYPE, callback_data: str):
-    """处理快速指令按钮"""
+    """处理快速指令按钮 - 自动发送给游戏Bot并返回结果"""
     commands_map = {
         "cmd_start": "我要修仙",
         "cmd_my_info": "我的信息",
@@ -107,8 +108,8 @@ async def handle_command_button(update: Update, context: ContextTypes.DEFAULT_TY
     
     command = commands_map.get(callback_data)
     if command:
-        message = f"📤 已生成指令: 【{command}】\n\n请复制上述指令并发送给 @美奈 机器人"
-        await update.callback_query.edit_message_text(text=message)
+        # 使用转发处理器发送指令并等待结果
+        await ForwardHandler.send_command_and_wait(update, context, command)
     else:
         await update.callback_query.edit_message_text(text="❌ 未知的指令")
 

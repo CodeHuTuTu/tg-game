@@ -92,8 +92,28 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     logger.info(f"收到来自 {user_id} 的消息: {message_text}")
     
+    # 检查这是否是来自游戏Bot的回复
+    # 如果消息来自游戏Bot，则转发给正在等待的用户
+    try:
+        from src.utils.config import ConfigManager
+        config_manager = ConfigManager()
+        game_bot_user_id = config_manager.get("game_bot_user_id")
+        
+        # 如果这是来自游戏Bot的消息，且有用户在等待回复
+        if game_bot_user_id and user_id == game_bot_user_id:
+            # 获取用户信息（从update的chat中）
+            if update.message.forward_from or update.message.text:
+                # 这条消息来自游戏Bot
+                logger.info(f"收到来自游戏Bot的回复: {message_text}")
+                
+                # 转发给等待的用户（需要在context中保存用户ID）
+                # 这里的逻辑需要更复杂的会话管理
+                # 暂时只记录日志
+                pass
+    except Exception as e:
+        logger.error(f"处理来自游戏Bot的消息时出错: {e}")
+    
     # 这里可以添加更多的消息处理逻辑
-    # 例如：处理用户的手动输入，自动转发给游戏 Bot 等
 
 
 if __name__ == "__main__":

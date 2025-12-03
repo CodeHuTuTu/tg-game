@@ -8,10 +8,14 @@ telegram:
   # 你的 Telegram User ID（获取方式：https://t.me/userinfobot）
   user_id: 123456789
   
-  # 游戏机器人的用户名或 User ID
-  game_bot_id: 987654321  # 美奈机器人的ID
-  # 或者使用用户名
-  game_bot_username: "mei_nai_bot"
+  # 游戏机器人的用户名
+  game_bot_username: "mei_nai_bot"  # 美奈机器人
+  
+  # [可选] 游戏机器人的 User ID
+  # 如果填写此项，Bot 可以自动向游戏机器人转发指令并返回结果
+  # 如何获取: 在游戏机器人中运行 /start，然后运行此处理器查看日志获取ID
+  # 或使用第三方工具如 https://t.me/userinfobot
+  game_bot_user_id: null
 
 # 数据库配置
 database:
